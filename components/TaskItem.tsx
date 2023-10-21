@@ -23,7 +23,7 @@ function TaskItem({ isDragging, provided, task }: TaskItemProps) {
       {...provided.draggableProps}
       {...provided.dragHandleProps}
     >
-      <Card className={cn("w-[350px]", isDragging ? "bg-slate-50" : "")}>
+      <Card className={cn(isDragging ? "bg-slate-50" : "")}>
         <CardHeader>
           <CardTitle>{task.task}</CardTitle>
           <CardDescription>
