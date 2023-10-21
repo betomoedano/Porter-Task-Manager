@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Task } from "@/types/types";
 import { DraggableProvided } from "react-beautiful-dnd";
+import { cn } from "@/lib/utils";
 
 type TaskItemProps = {
   task: Task;
@@ -18,12 +19,11 @@ type TaskItemProps = {
 function TaskItem({ isDragging, provided, task }: TaskItemProps) {
   return (
     <li
-      className="border border-blue-500 w-fit p-3"
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
     >
-      <Card className="w-[350px]">
+      <Card className={cn("w-[350px]", isDragging ? "bg-slate-50" : "")}>
         <CardHeader>
           <CardTitle>{task.task}</CardTitle>
           <CardDescription>
