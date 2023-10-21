@@ -1,7 +1,14 @@
 "use client";
 import { todos } from "@/dommyData";
 import { useCallback, useState } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DraggableProvided,
+  DraggableStateSnapshot,
+} from "react-beautiful-dnd";
+import TaskItem from "./TaskItem";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState(todos);
@@ -34,21 +41,22 @@ export default function Dashboard() {
       <Droppable droppableId="droppable-1">
         {(provided, snapshot) => (
           <ul ref={provided.innerRef} {...provided.droppableProps}>
-            {tasks.map((task) => (
+            {tasks.map((task, index) => (
               <Draggable
                 key={task.id}
                 draggableId={task.id.toString()}
-                index={task.id}
+                index={index}
               >
-                {(provided) => (
-                  <li
-                    className="border border-blue-500 w-fit p-3"
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                    <div>{task.task}</div>
-                  </li>
+                {(
+                  dragProvided: DraggableProvided,
+                  dragSnapshot: DraggableStateSnapshot
+                ) => (
+                  <TaskItem
+                    key={task.id}
+                    task={task}
+                    provided={dragProvided}
+                    isDragging={dragSnapshot.isDragging}
+                  />
                 )}
               </Draggable>
             ))}

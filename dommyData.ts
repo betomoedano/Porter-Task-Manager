@@ -1,20 +1,22 @@
-export const todos = [
+import { Task } from "./types/types";
+
+export const todos: Task[] = [
   {
-    id: 1,
+    id: "1",
     task: "Learn React",
-    isCompleted: false,
-    dueDate: "2023-10-20",
+    tag: "front-end",
+    date: "2023-11-05",
   },
   {
-    id: 2,
+    id: "2",
     task: "Build a To-Do App",
-    isCompleted: false,
-    dueDate: "2023-11-05",
+    tag: "front-end",
+    date: "2023-11-05",
   },
   {
-    id: 3,
+    id: "3",
     task: "Review CSS Modules",
-    isCompleted: true,
-    dueDate: "2023-10-15",
+    tag: "front-end",
+    date: "2023-11-05",
   },
 ];

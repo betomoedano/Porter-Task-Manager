@@ -8,7 +8,6 @@ export default function Home() {
         <h1 className="text-lg font-bold">Dashboard</h1>
         <Button>New Task</Button>
       </div>
-
       <Dashboard />
     </main>
   );
