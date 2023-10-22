@@ -18,6 +18,7 @@ export type Board = {
 };
 
 export type BoardAction =
+  | { type: "SET_TASKS"; payload: Board }
   | { type: "ADD_TASK"; payload: Task }
   | { type: "REMOVE_TASK"; payload: RemoveTaskPayload }
   | { type: "MOVE_TASK"; payload: OnDragPayload }

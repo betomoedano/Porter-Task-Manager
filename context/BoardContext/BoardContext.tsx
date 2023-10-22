@@ -18,6 +18,25 @@ export const BoardProvider = ({ children }: React.PropsWithChildren) => {
     boardReducer,
     boardInitialState
   );
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    loadData();
+  }, []);
+
+  function loadData() {
+    const localBoardData = localStorage.getItem("@Board");
+
+    if (localBoardData === null) {
+      localStorage.setItem("@Board", JSON.stringify(boardInitialState));
+    } else {
+      const dataObject = JSON.parse(localBoardData);
+      dispatch({ type: "SET_TASKS", payload: dataObject });
+    }
+    setLoading(false);
+  }
+
+  if (loading) return;
   return (
     <BoardContext.Provider value={{ boardState, dispatch }}>
       {children}
@@ -39,12 +58,18 @@ export function useBoard() {
 
 function boardReducer(state: Board, action: BoardAction): Board {
   switch (action.type) {
+    case "SET_TASKS": {
+      return action.payload;
+    }
     case "MOVE_COLUMN": {
       const result = [...state.ordered];
       const [removed] = result.splice(action.payload.source.index, 1);
       result.splice(action.payload.destination.index, 0, removed);
 
-      return { ...state, ordered: result };
+      const newState = { ...state, ordered: result };
+      // save locally
+      localStorage.setItem("@Board", JSON.stringify(newState));
+      return newState;
     }
     case "MOVE_TASK": {
       if (
@@ -61,14 +86,17 @@ function boardReducer(state: Board, action: BoardAction): Board {
         );
         reorderedTasks.splice(action.payload.destination.index, 0, movedTask);
 
-        // Exit after handling reordering within the same column
-        return {
+        const newState = {
           ...state,
           columns: {
             ...state.columns,
             [action.payload.source.droppableId]: reorderedTasks,
           },
         };
+        // save locally
+        localStorage.setItem("@Board", JSON.stringify(newState));
+        // Exit after handling reordering within the same column
+        return newState;
       }
 
       // Handling movement between different columns
@@ -79,7 +107,7 @@ function boardReducer(state: Board, action: BoardAction): Board {
       const [removedTask] = startTasks.splice(action.payload.source.index, 1);
       finishTasks.splice(action.payload.destination.index, 0, removedTask);
 
-      return {
+      const newState = {
         ...state,
         columns: {
           ...state.columns,
@@ -87,15 +115,25 @@ function boardReducer(state: Board, action: BoardAction): Board {
           [action.payload.destination.droppableId]: finishTasks,
         },
       };
+
+      // save locally
+      localStorage.setItem("@Board", JSON.stringify(newState));
+
+      return newState;
     }
     case "ADD_TASK": {
-      return {
+      const newState = {
         ...state,
         columns: {
           ...state.columns,
           ["Pending"]: [action.payload, ...state.columns.Pending],
         },
       };
+
+      // save
+      localStorage.setItem("@Board", JSON.stringify(newState));
+
+      return newState;
     }
     case "REMOVE_TASK": {
       // I'm sure there is a better way to do this :')
@@ -107,6 +145,9 @@ function boardReducer(state: Board, action: BoardAction): Board {
           (task) => task.id !== taskToRemoveId
         );
       }
+      // save
+      localStorage.setItem("@Board", JSON.stringify(newState));
+
       return newState;
     }
     default: {

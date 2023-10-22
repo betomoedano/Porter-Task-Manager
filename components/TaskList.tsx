@@ -13,6 +13,7 @@ import { Button } from "./ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
 import CreateTaskForm from "./CreateTaskForm";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 type TaskListProps = {
   listTitle?: string;
@@ -54,9 +55,14 @@ export default function TaskList({
               <Button
                 variant={"secondary"}
                 size={"icon"}
-                onClick={() => setShowForm(true)}
+                onClick={() => setShowForm(!showForm)}
               >
-                <PlusIcon />
+                <PlusIcon
+                  className={cn(
+                    showForm ? "rotate-45" : "",
+                    "transition-all ease-in-out"
+                  )}
+                />
               </Button>
             )}
           </CardHeader>
