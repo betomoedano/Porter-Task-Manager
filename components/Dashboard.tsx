@@ -1,20 +1,16 @@
 "use client";
-import { initialState } from "@/dommyData";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import {
   DragDropContext,
   Droppable,
   DropResult,
   DraggableLocation,
 } from "react-beautiful-dnd";
-import TaskItem from "./TaskItem";
 import Column from "./Column";
+import { useBoard } from "@/context/BoardContext/BoardContext";
 
 export default function Dashboard() {
-  const [dashboardState, setDashboardState] = useState({
-    columns: initialState,
-    ordered: Object.keys(initialState),
-  });
+  const { boardState, dispatch } = useBoard();
 
   // using useCallback is optional
   const onBeforeCapture = useCallback(() => {
@@ -48,53 +44,15 @@ export default function Dashboard() {
 
       // Reordering column
       if (result.type === "COLUMN") {
-        const result = [...dashboardState.ordered];
-        const [removed] = result.splice(source.index, 1);
-        result.splice(destination.index, 0, removed);
-
-        setDashboardState({ ...dashboardState, ordered: result });
+        dispatch({ type: "MOVE_COLUMN", payload: { source, destination } });
         return;
       }
-
       // Reordering or moving tasks
       if (result.type === "TASK") {
-        if (source.droppableId === destination.droppableId) {
-          // Reordering within the same column
-          const reorderedTasks = [
-            ...dashboardState.columns[source.droppableId],
-          ];
-          const [movedTask] = reorderedTasks.splice(source.index, 1);
-          reorderedTasks.splice(destination.index, 0, movedTask);
-
-          setDashboardState({
-            ...dashboardState,
-            columns: {
-              ...dashboardState.columns,
-              [source.droppableId]: reorderedTasks,
-            },
-          });
-          return; // Exit after handling reordering within the same column
-        }
-
-        // Handling movement between different columns
-        const startTasks = [...dashboardState.columns[source.droppableId]];
-        const finishTasks = [
-          ...dashboardState.columns[destination.droppableId],
-        ];
-        const [removedTask] = startTasks.splice(source.index, 1);
-        finishTasks.splice(destination.index, 0, removedTask);
-
-        setDashboardState({
-          ...dashboardState,
-          columns: {
-            ...dashboardState.columns,
-            [source.droppableId]: startTasks,
-            [destination.droppableId]: finishTasks,
-          },
-        });
+        dispatch({ type: "MOVE_TASK", payload: { source, destination } });
       }
     },
-    [dashboardState]
+    [dispatch]
   );
 
   return (
@@ -112,12 +70,12 @@ export default function Dashboard() {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {dashboardState.ordered.map((key, index) => (
+            {boardState.ordered.map((key, index) => (
               <Column
                 key={key}
                 index={index}
                 listTitle={key}
-                listOfTasks={dashboardState.columns[key]}
+                listOfTasks={boardState.columns[key]}
               />
             ))}
           </ul>
