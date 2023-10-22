@@ -1,5 +1,6 @@
 import { BoardProvider } from "@/context/BoardContext/BoardContext";
 import "../styles/globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function RootLayout({
   children,
@@ -12,6 +13,7 @@ export default function RootLayout({
         <div className="md:max-w-screen-xl mx-auto">
           <BoardProvider>{children}</BoardProvider>
         </div>
+        <Analytics />
       </body>
     </html>
   );
