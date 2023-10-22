@@ -8,9 +8,11 @@ import {
 } from "react-beautiful-dnd";
 import Column from "./Column";
 import { useBoard } from "@/context/BoardContext/BoardContext";
+import useWindowSize from "@/hooks/useWindowSize";
 
 export default function Dashboard() {
   const { boardState, dispatch } = useBoard();
+  const { isMobile } = useWindowSize();
 
   // using useCallback is optional
   const onBeforeCapture = useCallback(() => {
@@ -54,7 +56,11 @@ export default function Dashboard() {
       onDragUpdate={onDragUpdate}
       onDragEnd={onDragEnd}
     >
-      <Droppable droppableId="dashboard" type="COLUMN" direction="horizontal">
+      <Droppable
+        droppableId="dashboard"
+        type="COLUMN"
+        direction={isMobile ? "vertical" : "horizontal"}
+      >
         {(provided, snapshot) => (
           <ul
             className="grid md:grid-cols-3 gap-3"
