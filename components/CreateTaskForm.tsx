@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from "./ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -22,7 +23,9 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { useBoard } from "@/context/BoardContext/BoardContext";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   task: z.string().min(2, { message: "Enter at least 2 characters" }).max(100),
@@ -41,16 +44,26 @@ export default function CreateTaskForm({
       description: "",
     },
   });
+  const { dispatch } = useBoard();
+  const [tag, setTag] = useState("Low");
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  function onSubmit({ task, description }: z.infer<typeof formSchema>) {
+    dispatch({
+      type: "ADD_TASK",
+      payload: {
+        id: Math.random().toString(), // YOLO
+        date: new Date().toDateString(),
+        tag,
+        description,
+        task,
+      },
+    });
+    setShowForm(false);
   }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Card className="pt-3">
+        <Card className="pt-6">
           <CardContent>
             <div className="flex items-end justify-between gap-3">
               <FormField
@@ -75,25 +88,30 @@ export default function CreateTaskForm({
                 <DropdownMenuContent className="w-40">
                   <DropdownMenuLabel>Select Priority</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-between hover:text-red-500 hover:bg-red-50"
-                    onClick={() => {}}
+                  <DropdownMenuItem
+                    className={cn(
+                      "w-full px-3 justify-between focus:bg-red-50 focus:text-red-500 cursor-pointer"
+                    )}
+                    onClick={() => setTag("High")}
                   >
                     High <span>!!!</span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-between hover:text-yellow-500 hover:bg-yellow-50"
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className={cn(
+                      "w-full px-3 justify-between focus:bg-yellow-50 focus:text-yellow-500 cursor-pointer"
+                    )}
+                    onClick={() => setTag("Medium")}
                   >
                     Medium <span>!!</span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-between hover:text-green-500 hover:bg-green-50"
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className={cn(
+                      "w-full px-3 justify-between focus:bg-green-50 focus:text-green-500 cursor-pointer"
+                    )}
+                    onClick={() => setTag("Low")}
                   >
                     Low <span>!</span>
-                  </Button>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -113,6 +131,7 @@ export default function CreateTaskForm({
             <div className="flex gap-3 mt-5">
               <Button
                 onClick={() => setShowForm(false)}
+                type="button"
                 className="w-full"
                 variant={"secondary"}
               >

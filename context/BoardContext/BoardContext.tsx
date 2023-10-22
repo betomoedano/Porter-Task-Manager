@@ -89,6 +89,13 @@ function boardReducer(state: Board, action: BoardAction): Board {
       };
     }
     case "ADD_TASK": {
+      return {
+        ...state,
+        columns: {
+          ...state.columns,
+          ["Pending"]: [...state.columns.Pending, action.payload],
+        },
+      };
     }
     case "REMOVE_TASK": {
       // I'm sure there is a better way to do this :')
