@@ -26,10 +26,11 @@ import {
 import { Dispatch, SetStateAction, useState } from "react";
 import { useBoard } from "@/context/BoardContext/BoardContext";
 import { cn } from "@/lib/utils";
+import { Textarea } from "./ui/textarea";
 
 const formSchema = z.object({
   task: z.string().min(2, { message: "Enter at least 2 characters" }).max(100),
-  description: z.string(),
+  description: z.string().max(500),
 });
 
 export default function CreateTaskForm({
@@ -63,7 +64,8 @@ export default function CreateTaskForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Card className="pt-6">
+        <Card>
+          <CardHeader className="font-bold pb-3">New Task</CardHeader>
           <CardContent>
             <div className="flex items-end justify-between gap-3">
               <FormField
@@ -122,7 +124,7 @@ export default function CreateTaskForm({
                 <FormItem className="mt-2">
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Input placeholder="Description" {...field} />
+                    <Textarea placeholder="Description" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

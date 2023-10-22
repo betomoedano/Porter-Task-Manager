@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
   Card,
+  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -11,6 +12,7 @@ import { DraggableProvided } from "react-beautiful-dnd";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import {
+  CalendarIcon,
   DotsHorizontalIcon,
   Pencil1Icon,
   StarIcon,
@@ -41,7 +43,7 @@ function TaskItem({ isDragging, provided, task }: TaskItemProps) {
       {...provided.dragHandleProps}
     >
       <Card className={cn(isDragging ? "bg-slate-50" : "")}>
-        <CardHeader>
+        <CardHeader className="pb-3">
           <div className="flex justify-between">
             <CardTitle>{task.task}</CardTitle>
             <DropdownMenu>
@@ -83,12 +85,28 @@ function TaskItem({ isDragging, provided, task }: TaskItemProps) {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <CardDescription>
-            Description with some more text here
-          </CardDescription>
         </CardHeader>
-        <CardFooter>
-          <CardDescription>{new Date().toDateString()}</CardDescription>
+        {task.description && (
+          <CardContent className="pb-3">
+            <CardDescription>{task.description}</CardDescription>
+          </CardContent>
+        )}
+        <CardFooter className="flex justify-between">
+          <div className="flex h-6 items-center gap-2">
+            <CalendarIcon className="text-slate-500" />
+            <CardDescription>{task.date}</CardDescription>
+          </div>
+          <CardDescription
+            className={`${
+              task.tag === "High"
+                ? "text-red-500 bg-red-50"
+                : task.tag === "Medium"
+                ? "text-yellow-500 bg-yellow-50"
+                : "text-green-500 bg-green-50"
+            } px-2 py-1 rounded text-xs`}
+          >
+            {task.tag}
+          </CardDescription>
         </CardFooter>
       </Card>
     </li>

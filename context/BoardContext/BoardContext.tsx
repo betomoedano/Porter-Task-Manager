@@ -93,7 +93,7 @@ function boardReducer(state: Board, action: BoardAction): Board {
         ...state,
         columns: {
           ...state.columns,
-          ["Pending"]: [...state.columns.Pending, action.payload],
+          ["Pending"]: [action.payload, ...state.columns.Pending],
         },
       };
     }
