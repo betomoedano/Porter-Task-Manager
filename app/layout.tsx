@@ -8,9 +8,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`h-screen w-full max-w-screen-xl mx-auto p-6 md:p-16 bg-slate-50`}
+        className={`h-screen w-full p-6 lg:p-16 bg-slate-50 border border-red-500`}
       >
-        {children}
+        <div className="md:max-w-screen-xl mx-auto">{children}</div>
       </body>
     </html>
   );
