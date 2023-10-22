@@ -1,4 +1,4 @@
-import { Task } from "./types/types";
+import { Task, TaskMap } from "./types/types";
 
 export const todos: Task[] = [
   {
@@ -21,7 +21,7 @@ export const todos: Task[] = [
   },
 ];
 
-export const initialState: { [key: string]: Task[] } = {
+export const initialState: TaskMap = {
   Pending: [
     {
       id: "1",
