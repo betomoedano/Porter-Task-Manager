@@ -56,6 +56,46 @@ export default function Dashboard() {
         result.splice(destination.index, 0, removed);
 
         setDashboardState({ ...dashboardState, ordered: result });
+        return;
+      }
+
+      console.log(result.type, source, destination);
+      // Reordering or moving tasks
+      if (result.type === "TASK") {
+        if (source.droppableId === destination.droppableId) {
+          // Reordering within the same column
+          const reorderedTasks = [
+            ...dashboardState.columns[source.droppableId],
+          ];
+          const [movedTask] = reorderedTasks.splice(source.index, 1);
+          reorderedTasks.splice(destination.index, 0, movedTask);
+
+          setDashboardState({
+            ...dashboardState,
+            columns: {
+              ...dashboardState.columns,
+              [source.droppableId]: reorderedTasks,
+            },
+          });
+          return; // Exit after handling reordering within the same column
+        }
+
+        // Handling movement between different columns
+        const startTasks = [...dashboardState.columns[source.droppableId]];
+        const finishTasks = [
+          ...dashboardState.columns[destination.droppableId],
+        ];
+        const [removedTask] = startTasks.splice(source.index, 1);
+        finishTasks.splice(destination.index, 0, removedTask);
+
+        setDashboardState({
+          ...dashboardState,
+          columns: {
+            ...dashboardState.columns,
+            [source.droppableId]: startTasks,
+            [destination.droppableId]: finishTasks,
+          },
+        });
       }
     },
     [dashboardState]
