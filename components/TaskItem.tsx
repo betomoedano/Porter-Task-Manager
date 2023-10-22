@@ -9,6 +9,8 @@ import {
 import { Task } from "@/types/types";
 import { DraggableProvided } from "react-beautiful-dnd";
 import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
+import { TrashIcon } from "@radix-ui/react-icons";
 
 type TaskItemProps = {
   task: Task;
@@ -19,13 +21,23 @@ type TaskItemProps = {
 function TaskItem({ isDragging, provided, task }: TaskItemProps) {
   return (
     <li
+      className="group"
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
     >
       <Card className={cn(isDragging ? "bg-slate-50" : "")}>
         <CardHeader>
-          <CardTitle>{task.task}</CardTitle>
+          <div className="flex justify-between">
+            <CardTitle>{task.task}</CardTitle>
+            <Button
+              className="group-hover:flex"
+              variant="destructive"
+              size="icon"
+            >
+              <TrashIcon className="h-[1.2rem] w-[1.2rem]" />
+            </Button>
+          </div>
           <CardDescription>
             Description with some more text here
           </CardDescription>
