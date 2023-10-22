@@ -6,7 +6,13 @@ Design provided by [Eco Studios](https://www.ecostudios.dev)
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Then run the server:
 
 ```bash
 npm run dev
