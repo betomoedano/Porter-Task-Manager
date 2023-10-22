@@ -56,7 +56,6 @@ export default function Dashboard() {
         return;
       }
 
-      console.log(result.type, source, destination);
       // Reordering or moving tasks
       if (result.type === "TASK") {
         if (source.droppableId === destination.droppableId) {

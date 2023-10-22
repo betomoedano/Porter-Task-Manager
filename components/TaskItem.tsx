@@ -10,10 +10,12 @@ import { Task } from "@/types/types";
 import { DraggableProvided } from "react-beautiful-dnd";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
-import { DotIcon, DotsHorizontalIcon, TrashIcon } from "@radix-ui/react-icons";
+import { DotsHorizontalIcon, StarIcon, TrashIcon } from "@radix-ui/react-icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
@@ -46,8 +48,20 @@ function TaskItem({ isDragging, provided, task }: TaskItemProps) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="">
-                <Button variant="destructive" size="icon">
-                  <TrashIcon className="h-[1.2rem] w-[1.2rem]" />
+                <DropdownMenuLabel>Options</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <Button
+                  variant="ghost"
+                  className="w-full justify-between hover:text-red-500 hover:bg-red-50"
+                >
+                  Delete <TrashIcon className="h-[1.2rem] w-[1.2rem]" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-between hover:text-yellow-500 hover:bg-yellow-50"
+                >
+                  Favorites
+                  <StarIcon className="h-[1.2rem] w-[1.2rem]" />
                 </Button>
               </DropdownMenuContent>
             </DropdownMenu>
