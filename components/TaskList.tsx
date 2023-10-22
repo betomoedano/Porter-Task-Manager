@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Task } from "@/types/types";
 import {
   Draggable,
@@ -12,7 +13,6 @@ import TaskItem from "./TaskItem";
 import { Button } from "./ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
 import CreateTaskForm from "./CreateTaskForm";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 type TaskListProps = {
@@ -37,7 +37,24 @@ export default function TaskList({
   listId = "LIST",
   listType,
 }: TaskListProps) {
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = React.useState(false);
+
+  React.useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setShowForm((open) => !open);
+      }
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setShowForm(false);
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
+
   return (
     <Droppable
       droppableId={listId}

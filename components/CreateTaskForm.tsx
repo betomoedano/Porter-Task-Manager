@@ -76,7 +76,11 @@ export default function CreateTaskForm({
                     <FormLabel>Title</FormLabel>
                     <FormMessage className="w-full" />
                     <FormControl>
-                      <Input placeholder="Visit codewithbeto.dev" {...field} />
+                      <Input
+                        autoFocus
+                        placeholder="Visit codewithbeto.dev"
+                        {...field}
+                      />
                     </FormControl>
                   </FormItem>
                 )}
