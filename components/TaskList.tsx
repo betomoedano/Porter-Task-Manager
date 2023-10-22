@@ -9,6 +9,10 @@ import {
 } from "react-beautiful-dnd";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import TaskItem from "./TaskItem";
+import { Button } from "./ui/button";
+import { PlusIcon } from "@radix-ui/react-icons";
+import CreateTaskForm from "./CreateTaskForm";
+import { useState } from "react";
 
 type TaskListProps = {
   listTitle?: string;
@@ -32,6 +36,7 @@ export default function TaskList({
   listId = "LIST",
   listType,
 }: TaskListProps) {
+  const [showForm, setShowForm] = useState(false);
   return (
     <Droppable
       droppableId={listId}
@@ -43,8 +48,24 @@ export default function TaskList({
         dropSnapshot: DroppableStateSnapshot
       ) => (
         <Card {...dropProvided.droppableProps}>
-          <CardHeader className="text-xl font-bold">{listTitle}</CardHeader>
+          <CardHeader className="h-20 flex flex-row justify-between text-xl font-bold">
+            {listTitle}
+            {listTitle === "Pending" && (
+              <Button
+                variant={"secondary"}
+                size={"icon"}
+                onClick={() => setShowForm(true)}
+              >
+                <PlusIcon />
+              </Button>
+            )}
+          </CardHeader>
           <CardContent>
+            {listTitle === "Pending" && showForm && (
+              <div className="mb-3">
+                <CreateTaskForm setShowForm={setShowForm} />
+              </div>
+            )}
             <InnerList
               listOfTasks={listOfTasks}
               dropProvided={dropProvided}

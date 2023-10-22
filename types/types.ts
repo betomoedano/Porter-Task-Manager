@@ -5,6 +5,7 @@ export type Task = {
   task: string;
   tag: string;
   date: string;
+  description: string;
 };
 
 export type TaskMap = {
