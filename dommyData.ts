@@ -51,5 +51,4 @@ export const initialState: { [key: string]: Task[] } = {
       date: "2023-10-23",
     },
   ],
-  Trash: [],
 };

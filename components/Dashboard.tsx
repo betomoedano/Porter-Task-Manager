@@ -109,7 +109,7 @@ export default function Dashboard() {
       <Droppable droppableId="dashboard" type="COLUMN" direction="horizontal">
         {(provided, snapshot) => (
           <ul
-            className="md:grid grid-cols-3 gap-3"
+            className="grid md:grid-cols-4 gap-3"
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
