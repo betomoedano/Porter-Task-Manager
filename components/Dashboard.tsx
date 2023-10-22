@@ -1,12 +1,9 @@
 "use client";
-import { initialState, todos } from "@/dommyData";
+import { initialState } from "@/dommyData";
 import { useCallback, useState } from "react";
 import {
   DragDropContext,
   Droppable,
-  Draggable,
-  DraggableProvided,
-  DraggableStateSnapshot,
   DropResult,
   DraggableLocation,
 } from "react-beautiful-dnd";

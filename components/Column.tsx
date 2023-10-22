@@ -25,7 +25,6 @@ export default function Column({ index, listOfTasks, listTitle }: ColumnProps) {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          Column {listTitle}
           <TaskList
             listId={listTitle}
             listType="TASK"

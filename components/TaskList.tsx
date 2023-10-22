@@ -43,7 +43,7 @@ export default function TaskList({
         dropSnapshot: DroppableStateSnapshot
       ) => (
         <Card {...dropProvided.droppableProps}>
-          <CardHeader>{listTitle}</CardHeader>
+          <CardHeader className="text-xl font-bold">{listTitle}</CardHeader>
           <CardContent>
             <InnerList
               listOfTasks={listOfTasks}
@@ -65,28 +65,25 @@ type InnerListProps = {
 
 function InnerList({ title, listOfTasks, dropProvided }: InnerListProps) {
   return (
-    <>
-      {title}
-      <div ref={dropProvided.innerRef}>
-        {listOfTasks.map((task, index) => {
-          return (
-            <Draggable key={task.id} draggableId={task.id} index={index}>
-              {(
-                dragProvided: DraggableProvided,
-                dragSnapshot: DraggableStateSnapshot
-              ) => (
-                <TaskItem
-                  key={task.id}
-                  task={task}
-                  provided={dragProvided}
-                  isDragging={dragSnapshot.isDragging}
-                />
-              )}
-            </Draggable>
-          );
-        })}
-        {dropProvided.placeholder}
-      </div>
-    </>
+    <div ref={dropProvided.innerRef} className="grid grid-cols-1 gap-3">
+      {listOfTasks.map((task, index) => {
+        return (
+          <Draggable key={task.id} draggableId={task.id} index={index}>
+            {(
+              dragProvided: DraggableProvided,
+              dragSnapshot: DraggableStateSnapshot
+            ) => (
+              <TaskItem
+                key={task.id}
+                task={task}
+                provided={dragProvided}
+                isDragging={dragSnapshot.isDragging}
+              />
+            )}
+          </Draggable>
+        );
+      })}
+      {dropProvided.placeholder}
+    </div>
   );
 }

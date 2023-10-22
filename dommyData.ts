@@ -22,7 +22,7 @@ export const todos: Task[] = [
 ];
 
 export const initialState: { [key: string]: Task[] } = {
-  toStart: [
+  Pending: [
     {
       id: "1",
       task: "Learn React",
@@ -42,8 +42,8 @@ export const initialState: { [key: string]: Task[] } = {
       date: "2023-11-05",
     },
   ],
-  inProgress: [],
-  done: [
+  Ongoing: [],
+  Done: [
     {
       id: "4",
       task: "Get a Job",
@@ -51,4 +51,5 @@ export const initialState: { [key: string]: Task[] } = {
       date: "2023-10-23",
     },
   ],
+  Trash: [],
 };
