@@ -27,20 +27,11 @@ export default function Dashboard() {
   }, []);
   const onDragEnd = useCallback(
     (result: DropResult) => {
-      // the only one that is required
       // console.log(result);
       if (!result.destination) return; // dropped nowhere
 
       const source: DraggableLocation = result.source;
       const destination: DraggableLocation = result.destination;
-
-      // did not move anywhere - can bail early
-      if (
-        source.droppableId === destination.droppableId &&
-        source.index === destination.index
-      ) {
-        return;
-      }
 
       // Reordering column
       if (result.type === "COLUMN") {

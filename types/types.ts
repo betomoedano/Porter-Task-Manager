@@ -17,12 +17,16 @@ export type Board = {
 };
 
 export type BoardAction =
-  | { type: "ADD_TASK"; payload: string }
-  | { type: "REMOVE_TASK"; payload: number }
+  | { type: "ADD_TASK"; payload: Task }
+  | { type: "REMOVE_TASK"; payload: RemoveTaskPayload }
   | { type: "MOVE_TASK"; payload: OnDragPayload }
   | { type: "MOVE_COLUMN"; payload: OnDragPayload };
 
 type OnDragPayload = {
   source: DraggableLocation;
   destination: DraggableLocation;
+};
+
+type RemoveTaskPayload = {
+  id: string;
 };

@@ -18,6 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { useBoard } from "@/context/BoardContext/BoardContext";
 
 type TaskItemProps = {
   task: Task;
@@ -26,6 +27,7 @@ type TaskItemProps = {
 };
 
 function TaskItem({ isDragging, provided, task }: TaskItemProps) {
+  const { dispatch } = useBoard();
   return (
     <li
       className="relative"
@@ -53,6 +55,9 @@ function TaskItem({ isDragging, provided, task }: TaskItemProps) {
                 <Button
                   variant="ghost"
                   className="w-full justify-between hover:text-red-500 hover:bg-red-50"
+                  onClick={() => {
+                    dispatch({ type: "REMOVE_TASK", payload: { id: task.id } });
+                  }}
                 >
                   Delete <TrashIcon className="h-[1.2rem] w-[1.2rem]" />
                 </Button>

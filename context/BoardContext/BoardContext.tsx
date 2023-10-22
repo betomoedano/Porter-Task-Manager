@@ -91,6 +91,16 @@ function boardReducer(state: Board, action: BoardAction): Board {
     case "ADD_TASK": {
     }
     case "REMOVE_TASK": {
+      // I'm sure there is a better way to do this :')
+      const taskToRemoveId = action.payload.id;
+      const newState = { ...state };
+
+      for (const column of Object.keys(state.columns)) {
+        newState.columns[column] = newState.columns[column].filter(
+          (task) => task.id !== taskToRemoveId
+        );
+      }
+      return newState;
     }
     default: {
       return boardInitialState;
