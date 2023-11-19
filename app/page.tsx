@@ -1,3 +1,4 @@
+import CompWithFetch from "@/components/CompWithFetch";
 import Dashboard from "@/components/Dashboard";
 import { Button } from "@/components/ui/button";
 import { GitHubLogoIcon, PlusIcon } from "@radix-ui/react-icons";
