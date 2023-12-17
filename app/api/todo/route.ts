@@ -3,9 +3,10 @@ export async function GET(request: Request) {
   // auth
   console.log("This is running on the server");
   // Wait for one second
+
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
-  throw new Error("error");
+  // throw new Error("error");
   return Response.json({ message: "Success again" });
 }
 
