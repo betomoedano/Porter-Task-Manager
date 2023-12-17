@@ -1,6 +1,7 @@
 "use client";
 import { useDebounce } from "@/hooks/useDebounce";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, Suspense, lazy, useEffect, useState } from "react";
+const LazyPostsComponent = lazy(() => import("./PostsComponent"));
 
 export default function SearchComponent(): JSX.Element {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -28,6 +29,9 @@ export default function SearchComponent(): JSX.Element {
           setSearchTerm(e.target.value)
         }
       />
+      <Suspense fallback={<h1>Lazy loading...</h1>}>
+        <LazyPostsComponent />
+      </Suspense>
     </div>
   );
 }

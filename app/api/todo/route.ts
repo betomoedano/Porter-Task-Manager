@@ -5,6 +5,7 @@ export async function GET(request: Request) {
   // Wait for one second
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
+  throw new Error("error");
   return Response.json({ message: "Success again" });
 }
 
