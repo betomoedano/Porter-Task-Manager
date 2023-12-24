@@ -4,6 +4,8 @@ import SearchComponent from "@/components/SearchComponent";
 import SuspenseComponent from "@/components/SuspenseComponent";
 import UseCallbackExample from "@/components/UseCallbackExample";
 import UseMemoExample from "@/components/UseMemoExample";
+import VirtualizedList from "@/components/VirtualizedList";
+import { createProducts } from "@/lib/utils";
 import { Suspense } from "react";
 
 export default function Playground() {
@@ -18,7 +20,8 @@ export default function Playground() {
         </Suspense>
       </ErrorBoundary> */}
       {/* <UseMemoExample /> */}
-      <UseCallbackExample />
+      {/* <UseCallbackExample /> */}
+      <VirtualizedList products={createProducts()} />
     </main>
   );
 }

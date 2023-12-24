@@ -39,7 +39,7 @@ export function createProducts(): Product[] {
   console.log("Creating Products");
   const products: Product[] = [];
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 10000; i++) {
     const price = Math.floor(Math.random() * 1000);
     products.push({
       id: i + 1,
