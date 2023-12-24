@@ -27,3 +27,43 @@ export async function getReq() {
   });
   return await response.json();
 }
+
+export interface Product {
+  id: number;
+  name: string;
+  isExpensive: boolean;
+  price: number;
+}
+
+export function createProducts(): Product[] {
+  console.log("Creating Products");
+  const products: Product[] = [];
+
+  for (let i = 0; i < 100; i++) {
+    const price = Math.floor(Math.random() * 1000);
+    products.push({
+      id: i + 1,
+      price: price,
+      isExpensive: price > 500 ? true : false,
+      name: `${i + 1} Product Name`,
+    });
+  }
+
+  return products;
+}
+
+export function filterProducts(
+  products: Product[],
+  filterBy: "all" | "expensive" | "cheap"
+): Product[] {
+  console.log("Filtering Products");
+  return products.filter((product) => {
+    if (filterBy === "all") {
+      return true;
+    } else if (filterBy === "expensive") {
+      return product.isExpensive;
+    } else if (filterBy === "cheap") {
+      return !product.isExpensive;
+    }
+  });
+}
