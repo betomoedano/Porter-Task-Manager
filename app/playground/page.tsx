@@ -2,6 +2,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import PostsComponent from "@/components/PostsComponent";
 import SearchComponent from "@/components/SearchComponent";
 import SuspenseComponent from "@/components/SuspenseComponent";
+import UseCallbackExample from "@/components/UseCallbackExample";
 import UseMemoExample from "@/components/UseMemoExample";
 import { Suspense } from "react";
 
@@ -16,7 +17,8 @@ export default function Playground() {
           <SuspenseComponent />
         </Suspense>
       </ErrorBoundary> */}
-      <UseMemoExample />
+      {/* <UseMemoExample /> */}
+      <UseCallbackExample />
     </main>
   );
 }
